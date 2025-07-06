@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: techno-container
-          image: 126189343233.dkr.ecr.us-east-1.amazonaws.com/techno-ecr-akbar:dev
+          image: 126189343233.dkr.ecr.us-east-1.amazonaws.com/techno-ecr-payakumbuh-akbar:dev
           ports:
             - containerPort: 2000
           env:
@@ -31,12 +31,11 @@ spec:
             - name: ATHENA_DB
               value: "rekognition_results_db"
             - name: S3_STAGING_DIR
-              value: s3://technooutput-payakumbuh-akbar
+              value: "s3://technooutput-payakumbuh-akbar"
             - name: FLASK_SECRET_KEY
               value: "lks"
             - name: API_GATEWAY_URL
-              value: https://m3snur0usd.execute-api.us-east-1.amazonaws.com/dev
-            - name: SNS_TOPIC_ARN
-              value: "126189343233.dkr.ecr.us-east-1.amazonaws.com/techno-ecr-akbar:dev"
+              value: "https://uhemxy9pij.execute-api.us-east-1.amazonaws.com/dev"
+              value: "arn:aws:sns:us-east-1:126189343233:techno-sns-payakumbuh-akbar"
             - name: ATHENA_SCHEMA_NAME
               value: "rekognition_result"

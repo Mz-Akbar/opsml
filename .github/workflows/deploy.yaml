@@ -1,4 +1,4 @@
-name: CI/CD to EKS on Tag Push
+name: CI/CD AWS to EKS on Tag Push
 
 on:
   push:

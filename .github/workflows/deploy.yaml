@@ -2,11 +2,10 @@ name: CI/CD AWS to EKS on Tag Push
 
 on:
   push:
+    tags: 'v1.0.0'
     branches:
       - dev
-    paths:
-      - "eks/**"
-      - ".github/workflows/deploy.yaml"
+    
 
 jobs:
   build:

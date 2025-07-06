@@ -40,7 +40,7 @@ jobs:
       - name: Build, Tag, and Push Docker Image}
         run: |
           IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${GITHUB_REF_NAME}"
-          echo "Building Docker image: $IMAGE
+          echo "Building Docker image: $IMAGE"
           docker build -t $IMAGE .
           docker push $IMAGE
 

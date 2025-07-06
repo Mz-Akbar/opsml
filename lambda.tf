@@ -55,6 +55,12 @@ resource "aws_lambda_function" "POST" {
     runtime = "python3.11"
     handler = "lambda_post.lambda_handler"
     source_code_hash = data.archive_file.lambda_post_zip.output_base64sha256
+
+    environment {
+      variables = {
+        TOKEN_TABLE = "Token"
+    }
+  }
 }
 
 resource "aws_lambda_permission" "allowdynamodbpost" {

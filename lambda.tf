@@ -65,7 +65,7 @@ resource "aws_lambda_function" "POST" {
 
 resource "aws_lambda_permission" "allowdynamodbpost" {
     statement_id = "AllowExecutionFromDynamoDB"
-    action = "lambda:Invokefunction"
+    action = "lambda:InvokeFunction"
     function_name = aws_lambda_function.POST.function_name
     principal = "apigateway.amazonaws.com"
     source_arn = "arn:aws:execute-api:us-east-1:126189343233:${aws_api_gateway_rest_api.rest-api.id}/*/*"
@@ -84,7 +84,7 @@ data "archive_file" "lambda_get_zip" {
 resource "aws_lambda_function" "GET" {
     function_name = "techno-lambda-get"
     timeout = 90
-    filename = data.archive_file.lambda_get_zip.output_path
+    filename = "lambda_get.zip"
     role = "arn:aws:iam::126189343233:role/LabRole"
     runtime = "python3.11"
     handler = "lambda_get.lambda_handler"
@@ -99,7 +99,7 @@ resource "aws_lambda_function" "GET" {
 
 resource "aws_lambda_permission" "allowdynamodbget" {
     statement_id = "AllowExecutionFromDynamoDB"
-    action = "lambda:Invokefunction"
+    action = "lambda:InvokeFunction"
     function_name = aws_lambda_function.GET.function_name
     principal = "apigateway.amazonaws.com"
     source_arn = "arn:aws:execute-api:us-east-1:126189343233:${aws_api_gateway_rest_api.rest-api.id}/*/*"

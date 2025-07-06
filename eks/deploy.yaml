@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: techno-container
-          image: <aws_account_id>.dkr.ecr.<region>.amazonaws.com/techno-ecr-yourcity-namaanda:latest
+          image: 126189343233.dkr.ecr.us-east-1.amazonaws.com/techno-ecr-akbar:latest
           ports:
             - containerPort: 2000
           env:

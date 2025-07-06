@@ -33,7 +33,7 @@ jobs:
           REGISTRY="${{ steps.login-ecr.outputs.registry }}"
           IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${GITHUB_REF_NAME}"
           echo "Building Docker image: $IMAGE"
-          docker build -t $IMAGE ./eks
+          docker build -t $IMAGE ./opsml
           docker push $IMAGE
 
   setup:

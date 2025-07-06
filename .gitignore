@@ -8,11 +8,6 @@ cobasns.py
 templates/input_token.html
 templates/index_.html
 
-.github/workflows/deploy.yml
-
-dockerfile
-deployment/deploy.yaml
-deployment/service.yaml
 .env
 venv/
 

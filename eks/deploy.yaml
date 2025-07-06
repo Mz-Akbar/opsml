@@ -33,10 +33,10 @@ spec:
             - name: S3_STAGING_DIR
               value: s3://technooutput-payakumbuh-akbar
             - name: FLASK_SECRET_KEY
-              value: lks
+              value: "lks"
             - name: API_GATEWAY_URL
               value: https://m3snur0usd.execute-api.us-east-1.amazonaws.com/dev
             - name: SNS_TOPIC_ARN
-              value: arn:aws:sns:us-east-1:126189343233:techno-sns-payakumbuh-akbar
+              value: "arn:aws:sns:us-east-1:126189343233:techno-sns-payakumbuh-akbar"
             - name: ATHENA_SCHEMA_NAME
-              value: rekognition_result
+              value: "rekognition_result"

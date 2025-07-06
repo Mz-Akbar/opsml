@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "techno-table" {
-    name = "Tokens"
+    name = "Token"
     billing_mode = "PAY_PER_REQUEST"
     hash_key = "token"
 

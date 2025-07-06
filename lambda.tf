@@ -99,7 +99,7 @@ resource "aws_lambda_function" "GET" {
 
 resource "aws_lambda_permission" "allowdynamodbget" {
     statement_id = "AllowExecutionFromDynamoDB"
-    action = "lambda:Invokefunctioon"
+    action = "lambda:Invokefunction"
     function_name = aws_lambda_function.GET.function_name
     principal = "apigateway.amazonaws.com"
     source_arn = "arn:aws:execute-api:us-east-1:126189343233:${aws_api_gateway_rest_api.rest-api.id}/*/*"

@@ -21,3 +21,5 @@ provider.tf
 .terraform.lock.hcl
 
 
+terraform.tfstate.1751804850.backup
+terraform.tfstate.1751804861.backup

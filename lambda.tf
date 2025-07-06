@@ -89,6 +89,12 @@ resource "aws_lambda_function" "GET" {
     runtime = "python3.11"
     handler = "lambda_get.lambda_handler"
     source_code_hash = data.archive_file.lambda_get_zip.output_base64sha256
+
+     environment {
+      variables = {
+        TOKEN_TABLE = "Token"
+    }
+  }
 }
 
 resource "aws_lambda_permission" "allowdynamodbget" {

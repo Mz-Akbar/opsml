@@ -31,11 +31,12 @@ spec:
             - name: ATHENA_DB
               value: "rekognition_results_db"
             - name: S3_STAGING_DIR
-              value: "s3://technooutput-payakumbuh-akbar"
+              value: "s3://technoinput-payakumbuh-akbar"
             - name: FLASK_SECRET_KEY
               value: "lks"
             - name: API_GATEWAY_URL
               value: "https://uhemxy9pij.execute-api.us-east-1.amazonaws.com/dev"
+            - name: SNS_TOPIC_ARN
               value: "arn:aws:sns:us-east-1:126189343233:techno-sns-payakumbuh-akbar"
             - name: ATHENA_SCHEMA_NAME
               value: "rekognition_result"

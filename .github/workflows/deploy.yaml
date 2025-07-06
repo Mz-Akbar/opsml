@@ -1,4 +1,4 @@
-name: CI/CD to EKS on Tag Push
+name: CI/CD to AWS EKS on Tag Push
 
 on:
   push:
@@ -7,11 +7,6 @@ on:
     paths:
       - "eks/**"
       - ".github/workflows/deploy.yaml"
-
-env: 
-  ECR_REPOSITORY: "techno-ecr-akbar"
-  CLUSTER_NAME: "techno-eks-payakumbuh-akbar"
-
 
 jobs:
   build:

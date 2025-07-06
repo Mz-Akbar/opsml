@@ -15,3 +15,14 @@ deployment/deploy.yaml
 deployment/service.yaml
 .env
 venv/
+
+.terraform/
+*.tfstate
+*.tfstate.backup
+terraform.tfstate.txt
+
+
+provider.tf
+.terraform.lock.hcl
+
+

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: techno-deployment
+  labels:
+    app: techno-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: techno-app
+  template:
+    metadata:
+      labels:
+        app: techno-app
+    spec:
+      containers:
+        - name: techno-container
+          image: <aws_account_id>.dkr.ecr.<region>.amazonaws.com/techno-ecr-yourcity-namaanda:latest
+          ports:
+            - containerPort: 2000
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              value: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            - name: AWS_SECRET_ACCESS_KEY
+              value: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            - name: AWS_SESSION_TOKEN
+              value: ${{ secrets.AWS_SESSION_TOKEN }}
+            - name: AWS_REGION
+              value: ${{ secrets.AWS_REGION }}
+            - name: ATHENA_DB
+              value: "rekognition_results_db"
+            - name: S3_STAGING_DIR
+              value: s3://technooutput-payakumbuh-akbar
+            - name: FLASK_SECRET_KEY
+              value: lks
+            - name: API_GATEWAY_URL
+              value: https://m3snur0usd.execute-api.us-east-1.amazonaws.com/dev
+            - name: SNS_TOPIC_ARN
+              value: arn:aws:sns:us-east-1:126189343233:techno-sns-payakumbuh-akbar
+            - name: ATHENA_SCHEMA_NAME
+              value: rekognition_result

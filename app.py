@@ -9,7 +9,7 @@ import boto3
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'lks')
-API_GATEWAY_URL = os.environ.get('API_GATEWAY_URL', 'your_api_gateway_url_here')
+API_GATEWAY_URL = os.environ.get('API_GATEWAY_URL', 'https://m3snur0usd.execute-api.us-east-1.amazonaws.com/dev')
 
 # Decorator untuk route yang membutuhkan auth
 def token_required(f):
@@ -61,7 +61,7 @@ def dashboard():
         aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         aws_session_token=os.environ.get("AWS_SESSION_TOKEN")
         )
-        topic_arn = os.environ.get("SNS_TOPIC_ARN", 'arn:aws:sns:us-east-1:123456789012:my-topic')
+        topic_arn = os.environ.get("SNS_TOPIC_ARN", 'arn:aws:sns:us-east-1:123456789012:techno-sns-payakumbuh-akbar')
         
         subject = topic_arn.split(':')[-1]
         message = f"Selamat {subject}, You can access your dashboard."
@@ -76,7 +76,7 @@ def dashboard():
 
     
     conn = connect(
-        s3_staging_dir=os.environ.get("S3_STAGING_DIR", "s3://your-s3-bucket/"),
+        s3_staging_dir=os.environ.get("S3_STAGING_DIR", "s3://technoinput-payakumbuh-akbar/"),
         aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
         aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         aws_session_token=os.environ.get("AWS_SESSION_TOKEN"),
@@ -134,7 +134,7 @@ def validate_token_api():
                     aws_session_token=os.environ.get("AWS_SESSION_TOKEN")
                 )
 
-                topic_arn = os.environ.get("SNS_TOPIC_ARN", "arn:aws:sns:us-east-1:123456789012:YourTopicName")
+                topic_arn = os.environ.get("SNS_TOPIC_ARN", "arn:aws:sns:us-east-1:123456789012:techno-sns-payakumbuh-akbar")
                 message = "Selamat! Anda berhasil masuk ke dashboard menggunakan token yang valid."
                 
                 sns.publish(

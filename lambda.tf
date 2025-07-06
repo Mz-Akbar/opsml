@@ -59,7 +59,7 @@ resource "aws_lambda_function" "POST" {
 
 resource "aws_lambda_permission" "allowdynamodbpost" {
     statement_id = "AllowExecutionFromDynamoDB"
-    action = "lambda:Invokefunctioon"
+    action = "lambda:Invokefunction"
     function_name = aws_lambda_function.POST.function_name
     principal = "apigateway.amazonaws.com"
     source_arn = "arn:aws:execute-api:us-east-1:126189343233:${aws_api_gateway_rest_api.rest-api.id}/*/*"

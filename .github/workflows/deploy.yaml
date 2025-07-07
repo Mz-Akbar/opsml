@@ -57,6 +57,8 @@ jobs:
           echo "Cofiguration updated."
           cat deployment/deploy.yaml
 
+      - name: Replace ENV in deploy.yaml
+        run: envsubst < deployment/deploy.yaml.template > deployment/deploy.yaml
 
 
 

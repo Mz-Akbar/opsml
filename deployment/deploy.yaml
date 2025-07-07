@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: techno-container
-          image: <image-app>
+          image: 126189343233.dkr.ecr.us-east-1.amazonaws.com/techno-ecr-payakumbuh-akbar:dev
           ports:
             - containerPort: 2000
           env:
@@ -35,7 +35,7 @@ spec:
             - name: FLASK_SECRET_KEY
               value: "lks"
             - name: API_GATEWAY_URL
-              value: "https://0w3stay7sj.execute-api.us-east-1.amazonaws.com/dev"
+              value: "https://4e7cp1awub.execute-api.us-east-1.amazonaws.com/dev"
             - name: SNS_TOPIC_ARN
               value: "arn:aws:sns:us-east-1:126189343233:techno-sns-payakumbuh-akbar"
             - name: ATHENA_SCHEMA_NAME

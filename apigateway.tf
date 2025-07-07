@@ -4,50 +4,18 @@ resource "aws_api_gateway_rest_api" "rest-api" {
     endpoint_configuration {
         types = ["REGIONAL"]
     }
-
-    body = jsonencode({
-        openapi = "3.0.1"
-        info = {
-            title = "Techno-API"
-            version = "1.0"
-        }
-
-        paths = {
-            "/generate-token" = {
-                post = {
-                    x-amazon-apigateway-integration = {
-                        httpMethod = "POST"
-                        payloadFormatVersion = "1.0"
-                        type = "AWS_PROXY"
-                        uri = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${aws_lambda_function.POST.arn}/invocations"
-                    }
-                }
-            }
-
-            "/validate-token" = {
-                get = {
-                    x-amazon-apigateway-integration = {
-                        type = "AWS_PROXY"
-                        httpMethod = "GET"
-                        uri = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${aws_lambda_function.GET.arn}/invocations"
-                        payloadFormatVersion = "2.0"
-                    }   
-                }
-            }
-        }
-    })
 }
+
 
 resource "aws_api_gateway_deployment" "restapi" {
     rest_api_id = aws_api_gateway_rest_api.rest-api.id
-
- triggers = {
-    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.rest-api.body))
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
+  
+  depends_on = [
+    aws_api_gateway_method.GET,
+    aws_api_gateway_method.POST,
+    aws_api_gateway_integration.GET,
+    aws_api_gateway_integration.POST
+  ]
 }
 
 resource "aws_api_gateway_stage" "dev" {
@@ -55,3 +23,54 @@ resource "aws_api_gateway_stage" "dev" {
   rest_api_id   = aws_api_gateway_rest_api.rest-api.id
   stage_name    = "dev"
 }
+
+# GET
+resource "aws_api_gateway_resource" "GET" {
+    rest_api_id = aws_api_gateway_rest_api.rest-api.id
+    parent_id = aws_api_gateway_rest_api.rest-api.root_resource_id
+    path_part = "validate-token"
+}
+
+resource "aws_api_gateway_method" "GET" {
+    rest_api_id = aws_api_gateway_rest_api.rest-api.id
+    resource_id = aws_api_gateway_resource.GET.id
+    http_method = "GET"
+    authorization = "NONE"
+}
+
+resource "aws_api_gateway_integration" "GET" {
+    rest_api_id = aws_api_gateway_rest_api.rest-api.id
+    resource_id = aws_api_gateway_resource.GET.id
+    http_method = aws_api_gateway_method.GET.http_method
+    type = "AWS_PROXY"
+    uri = aws_lambda_function.GET.invoke_arn
+    integration_http_method = "GET"
+}
+
+
+# POST
+
+resource "aws_api_gateway_resource" "POST" {
+    rest_api_id = aws_api_gateway_rest_api.rest-api.id
+    parent_id = aws_api_gateway_rest_api.rest-api.root_resource_id
+    path_part = "generate-token"
+}
+
+
+resource "aws_api_gateway_method" "POST" {
+    rest_api_id = aws_api_gateway_rest_api.rest-api.id
+    resource_id = aws_api_gateway_resource.POST.id
+    http_method = "POST"
+    authorization = "NONE"
+}
+
+
+resource "aws_api_gateway_integration" "POST" {
+    rest_api_id = aws_api_gateway_rest_api.rest-api.id
+    resource_id = aws_api_gateway_resource.POST.id
+    http_method = aws_api_gateway_method.POST.http_method
+    type = "AWS_PROXY"
+    uri = aws_lambda_function.POST.invoke_arn
+    integration_http_method = "POST"
+}
+

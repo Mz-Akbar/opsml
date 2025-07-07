@@ -35,7 +35,7 @@ spec:
             - name: FLASK_SECRET_KEY
               value: "lks"
             - name: API_GATEWAY_URL
-              value: "https://4e7cp1awub.execute-api.us-east-1.amazonaws.com/dev"
+              value: "https://x14jpfrt3h.execute-api.us-east-1.amazonaws.com/dev"
             - name: SNS_TOPIC_ARN
               value: "arn:aws:sns:us-east-1:126189343233:techno-sns-payakumbuh-akbar"
             - name: ATHENA_SCHEMA_NAME

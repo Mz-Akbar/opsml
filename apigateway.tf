@@ -6,24 +6,6 @@ resource "aws_api_gateway_rest_api" "rest-api" {
     }
 }
 
-
-resource "aws_api_gateway_deployment" "restapi" {
-    rest_api_id = aws_api_gateway_rest_api.rest-api.id
-  
-  depends_on = [
-    aws_api_gateway_method.GET,
-    aws_api_gateway_method.POST,
-    aws_api_gateway_integration.GET,
-    aws_api_gateway_integration.POST
-  ]
-}
-
-resource "aws_api_gateway_stage" "dev" {
-  deployment_id = aws_api_gateway_deployment.restapi.id
-  rest_api_id   = aws_api_gateway_rest_api.rest-api.id
-  stage_name    = "dev"
-}
-
 # GET
 resource "aws_api_gateway_resource" "GET" {
     rest_api_id = aws_api_gateway_rest_api.rest-api.id
@@ -31,20 +13,20 @@ resource "aws_api_gateway_resource" "GET" {
     path_part = "validate-token"
 }
 
-resource "aws_api_gateway_method" "GET" {
+resource "aws_api_gateway_method" "method-get" {
     rest_api_id = aws_api_gateway_rest_api.rest-api.id
     resource_id = aws_api_gateway_resource.GET.id
     http_method = "GET"
     authorization = "NONE"
 }
 
-resource "aws_api_gateway_integration" "GET" {
+resource "aws_api_gateway_integration" "inter-get" {
     rest_api_id = aws_api_gateway_rest_api.rest-api.id
     resource_id = aws_api_gateway_resource.GET.id
-    http_method = aws_api_gateway_method.GET.http_method
+    http_method = aws_api_gateway_method.method-get.http_method
     type = "AWS_PROXY"
     uri = aws_lambda_function.GET.invoke_arn
-    integration_http_method = "GET"
+    integration_http_method = "POST"
 }
 
 
@@ -57,7 +39,7 @@ resource "aws_api_gateway_resource" "POST" {
 }
 
 
-resource "aws_api_gateway_method" "POST" {
+resource "aws_api_gateway_method" "method-post" {
     rest_api_id = aws_api_gateway_rest_api.rest-api.id
     resource_id = aws_api_gateway_resource.POST.id
     http_method = "POST"
@@ -65,12 +47,28 @@ resource "aws_api_gateway_method" "POST" {
 }
 
 
-resource "aws_api_gateway_integration" "POST" {
+resource "aws_api_gateway_integration" "inter-post" {
     rest_api_id = aws_api_gateway_rest_api.rest-api.id
     resource_id = aws_api_gateway_resource.POST.id
-    http_method = aws_api_gateway_method.POST.http_method
+    http_method = aws_api_gateway_method.method-post.http_method
     type = "AWS_PROXY"
     uri = aws_lambda_function.POST.invoke_arn
     integration_http_method = "POST"
 }
 
+resource "aws_api_gateway_deployment" "restapi" {
+    rest_api_id = aws_api_gateway_rest_api.rest-api.id
+  
+  depends_on = [
+    aws_api_gateway_method.method-get,
+    aws_api_gateway_method.method-post,
+    aws_api_gateway_integration.inter-get,
+    aws_api_gateway_integration.inter-post
+  ]
+}
+
+resource "aws_api_gateway_stage" "dev" {
+  deployment_id = aws_api_gateway_deployment.restapi.id
+  rest_api_id   = aws_api_gateway_rest_api.rest-api.id
+  stage_name    = "dev"
+}

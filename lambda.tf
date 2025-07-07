@@ -68,7 +68,7 @@ resource "aws_lambda_permission" "allowdynamodbpost" {
     action = "lambda:InvokeFunction"
     function_name = aws_lambda_function.POST.function_name
     principal = "apigateway.amazonaws.com"
-    source_arn = "arn:aws:execute-api:us-east-1:126189343233:${aws_api_gateway_rest_api.rest-api.id}/*/*"
+    source_arn = "${aws_api_gateway_rest_api.rest-api.execution_arn}/*/*"
 
 }
 
@@ -102,7 +102,7 @@ resource "aws_lambda_permission" "allowdynamodbget" {
     action = "lambda:InvokeFunction"
     function_name = aws_lambda_function.GET.function_name
     principal = "apigateway.amazonaws.com"
-    source_arn = "arn:aws:execute-api:us-east-1:126189343233:${aws_api_gateway_rest_api.rest-api.id}/*/*"
+    source_arn = "${aws_api_gateway_rest_api.rest-api.execution_arn}/*/*"
 
 }
 

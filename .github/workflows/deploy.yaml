@@ -40,7 +40,7 @@ jobs:
         id: build-image
         run: |
           sed -i "s|<image-app>|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" deployment/deploy.substituted.yaml
-          cat deployment/deploy.yaml
+          cat deployment/deploy.substituted.yaml
 
       # - name: Replace Credentials
       #   run: |

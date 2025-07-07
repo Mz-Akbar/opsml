@@ -2,7 +2,8 @@ name: CI/CD AWS to EKS on Tag Push
 
 on:
   push:
-    tags: v1.1.1
+    tags:
+      - 'v*'
     branches:
       - dev
 
@@ -108,8 +109,8 @@ jobs:
 
 
         run: |
-          envsubst < deployment/deploy.yaml > deployment/deploy.substituted.yaml
-          cat deployment/deploy.substituted.yaml
+          envsubst < deployment/deploy.substituted.yaml > deployment/deploy.yaml
+          cat deployment/deploy.yaml
 
 
       - name: Delete old Kubernetes resources

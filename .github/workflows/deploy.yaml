@@ -6,6 +6,11 @@ on:
     branches:
       - dev
     
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+  AWS_REGION:  ${{ secrets.AWS_REGION }}
 
 jobs:
   build:
@@ -40,6 +45,15 @@ jobs:
         id: build-image
         run: |
           sed -i "s|<image-app>|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" deployment/deploy.yaml
+          cat deployment/deploy.yaml
+
+      - name: Replace Credentials
+        run: |
+          sed -i "s|<AWS_ACCESS_KEY_ID>|$AWS_ACCESS_KEY_ID|g" deployment/deploy.yaml
+          sed -i "s|<AWS_SECRET_ACCESS_KEY>|$AWS_SECRET_ACCESS_KEY|g" deployment/deploy.yaml
+          sed -i "s|<AWS_SESSION_TOKEN>|$AWS_SESSION_TOKEN|g" deployment/deploy.yaml
+          sed -i "s|<AWS_REGION>|$AWS_REGION|g" deployment/deploy.yaml
+          echo "Cofiguration updated."
           cat deployment/deploy.yaml
 
 
@@ -94,9 +108,3 @@ jobs:
         run: |
           kubectl apply -f deployment/deploy.yaml
           kubectl apply -f deployment/service.yaml
-
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-          AWS_REGION:  ${{ secrets.AWS_REGION }}

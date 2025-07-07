@@ -13,6 +13,14 @@ resource "aws_lambda_function" "lambda-s3" {
     runtime = "python3.11"
     handler = "lambda_s3.lambda_handler"
     source_code_hash = data.archive_file.lambda_s3_zip.output_base64sha256
+
+    environment {
+      variables = {
+        SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:126189343233:techno-sns-payakumbuh-akbar",
+        KINESIS_STREAM_NAME = "techno-kinesis-Akbar",
+        DEST_BUCKET = "technooutput-payakumbuh-akbar"
+      }
+    }
     
 }
 
@@ -22,21 +30,6 @@ resource "aws_lambda_permission" "allow-s3" {
     function_name = aws_lambda_function.lambda-s3.function_name
     principal = "s3.amazonaws.com"
     source_arn = aws_s3_bucket.technoinput.arn
-}
-
-resource "aws_lambda_event_source_mapping" "allow-s3" {
-  event_source_arn = aws_kinesis_stream.techno-kinesis.arn
-  function_name = aws_lambda_function.lambda-s3.arn
-  starting_position  = "LATEST"
-  batch_size = 100
-  maximum_batching_window_in_seconds = 5
-  parallelization_factor = 2
-
-  destination_config {
-    on_failure {
-      destination_arn = aws_sns_topic.techno-sns.arn
-    }
-  }
 }
 
 # lambda POST

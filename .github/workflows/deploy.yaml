@@ -2,7 +2,7 @@ name: CI/CD AWS to EKS on Tag Push
 
 on:
   push:
-    tags: v1.0.1
+    tags: v1.0.2
     branches:
       - dev
     
@@ -34,6 +34,17 @@ jobs:
           echo "Building Docker image: $IMAGE"
           docker build -t $IMAGE .
           docker push $IMAGE
+
+      - name: Build 
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          sed -i "s|<image-app>|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" deployment/deploy.yaml
+          cat deployment/deploy.yaml
+
+
+
 
   setup:
     name: Configure kubeconfig for EKS

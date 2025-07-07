@@ -2,7 +2,7 @@ name: CI/CD AWS to EKS on Tag Push
 
 on:
   push:
-    tags: v1.0.1
+    tags: v1.0.5
     branches:
       - dev
     

@@ -27,7 +27,7 @@ spec:
             - name: AWS_SESSION_TOKEN
               value: "${{ secrets.AWS_SESSION_TOKEN }}"
             - name: AWS_REGION
-              value: "${{ secrets.AWS_REGION }}"
+              value: "us-east-1"
             - name: ATHENA_DB
               value: "rekognition_results_db"
             - name: S3_STAGING_DIR

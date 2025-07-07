@@ -23,6 +23,7 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -41,16 +42,6 @@ jobs:
           sed -i "s|<image-app>|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" deployment/deploy.yaml
           cat deployment/deploy.yaml
 
-      - name: Render deployment.yaml
-        run: |
-          echo "Rendering deployment.yaml with secrets..."
-          echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> $GITHUB_ENV
-          echo "ATHENA_DB=${{ secrets.ATHENA_DB }}" >> $GITHUB_ENV
-          echo "S3_STAGING_DIR=${{ secrets.S3_STAGING_DIR }}" >> $GITHUB_ENV
-          echo "FLASK_SECRET_KEY=${{ secrets.FLASK_SECRET_KEY }}" >> $GITHUB_ENV
-          echo "SNS_TOPIC_ARN=${{ secrets.SNS_TOPIC_ARN }}" >> $GITHUB_ENV
-          echo "ATHENA_SCHEMA_NAME=${{ secrets.ATHENA_SCHEMA_NAME }}" >> $GITHUB_ENV
-          envsubst < deployment/deploy.yaml.tmpl > deployment/deploy.yaml
 
 
 

@@ -4,9 +4,9 @@ output "api_gateway_url" {
 
 
 output "validate_token_url" {
-  value = "https://${aws_api_gateway_rest_api.rest-api.id}.execute-api.ap-southeast-1.amazonaws.com/${aws_api_gateway_stage.dev.stage_name}/validate-token"
+  value = "https://${aws_api_gateway_rest_api.rest-api.id}.execute-api.us-east-1.amazonaws.com/${aws_api_gateway_stage.dev.stage_name}/validate-token"
 }
 
 output "generate_token_url" {
-  value = "https://${aws_api_gateway_rest_api.rest-api.id}.execute-api.ap-southeast-1.amazonaws.com/${aws_api_gateway_stage.dev.stage_name}/generate-token"
+  value = "https://${aws_api_gateway_rest_api.rest-api.id}.execute-api.us-east-1.amazonaws.com/${aws_api_gateway_stage.dev.stage_name}/generate-token"
 }

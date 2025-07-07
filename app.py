@@ -11,6 +11,15 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'lks')
 API_GATEWAY_URL = os.environ.get('API_GATEWAY_URL', 'https://x14jpfrt3h.execute-api.us-east-1.amazonaws.com/dev')
 
+aws_access_key_id     = os.environ.get("AWS_ACCESS_KEY_ID")
+aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
+aws_session_token     = os.environ.get("AWS_SESSION_TOKEN")
+aws_region            = os.environ.get("AWS_REGION", "us-east-1")  
+athena_db             = os.environ.get("ATHENA_DB")
+s3_staging_dir        = os.environ.get("S3_STAGING_DIR")
+sns_topic_arn         = os.environ.get("SNS_TOPIC_ARN")
+athena_schema_name    = os.environ.get("ATHENA_SCHEMA_NAME")
+
 # Decorator untuk route yang membutuhkan auth
 def token_required(f):
     @wraps(f)

@@ -9,7 +9,7 @@ resource "aws_glue_catalog_table" "glue-table" {
     table_type = "EXTERNAL_TABLE"
 
     storage_descriptor {
-        location      = "s3://technoinput-payakumbuh-akbar/result"
+        location      = "s3://technooutput-payakumbuh-akbar/result"
         input_format  = "org.apache.hadoop.mapred.TextInputFormat"
         output_format = "org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat"
         number_of_buckets = -1

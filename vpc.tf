@@ -14,6 +14,9 @@ resource "aws_subnet" "Public-A" {
     ipv6_cidr_block = cidrsubnet(aws_vpc.techno-vpc.ipv6_cidr_block, 8, 0)
     availability_zone = "us-east-1a"
     assign_ipv6_address_on_creation = true
+    map_public_ip_on_launch = true
+    enable_resource_name_dns_a_record_on_launch = true
+    enable_resource_name_dns_aaaa_record_on_launch = true
 }
 
 resource "aws_subnet" "Public-B" {
@@ -22,6 +25,9 @@ resource "aws_subnet" "Public-B" {
     ipv6_cidr_block = cidrsubnet(aws_vpc.techno-vpc.ipv6_cidr_block, 8, 1)
     assign_ipv6_address_on_creation = true
     availability_zone = "us-east-1b"
+    map_public_ip_on_launch = true
+    enable_resource_name_dns_a_record_on_launch = true
+    enable_resource_name_dns_aaaa_record_on_launch = true
 }
 
 resource "aws_subnet" "Private-A" {

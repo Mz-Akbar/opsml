@@ -36,8 +36,8 @@ jobs:
       - name: Build 
         id: build-image
         run: |
-          sed -i "s|<image-app>|$IMAGE|g" k8s/deploy.subs.yaml
-          cat k8s/deploy.subs.yaml
+          sed -i "s|<image-app>|$IMAGE|g" eks/deploy.subs.yaml
+          cat eks/deploy.subs.yaml
 
 
   setup:
@@ -92,16 +92,16 @@ jobs:
 
 
         run: |
-          envsubst < k8s/deploy.subs.yaml > k8s/deploy.yaml
-          cat k8s/deploy.yaml
+          envsubst < k8s/deploy.subs.yaml > eks/deploy.yaml
+          cat eks/deploy.yaml
 
 
       - name: Delete old Kubernetes resources
         run: |
-          kubectl delete -f k8s/deploy.yaml || true
-          kubectl delete -f k8s/service.yaml || true
+          kubectl delete -f eks/deploy.yaml || true
+          kubectl delete -f eks/service.yaml || true
 
       - name: Deploy new version to EKS
         run: |
-          kubectl apply -f k8s/deploy.yaml
-          kubectl apply -f k8s/service.yaml
+          kubectl apply -f eks/deploy.yaml
+          kubectl apply -f eks/service.yaml

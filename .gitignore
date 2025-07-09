@@ -10,8 +10,11 @@ templates/index_.html
 
 .github/workflows/deploy.yml
 
-dockerfile
+
 deployment/deploy.yaml
 deployment/service.yaml
 .env
 venv/
+terraform.tfstate
+terraform.tfstate.backup
+provider.tf

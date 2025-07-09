@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: techno-container
-          image: <image-app>
+          image: "<image-app>"
           ports:
             - containerPort: 2000
           env:

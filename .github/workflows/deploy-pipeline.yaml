@@ -35,7 +35,8 @@ jobs:
           docker push $IMAGE
 
       - name: Build 
-        id: build-image
+        env:
+          IMAGE: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.ref_name }}
         run: |
           sed -i "s|<image-app>|$IMAGE|g" eks/deploy.subs.yaml
           cat eks/deploy.subs.yaml

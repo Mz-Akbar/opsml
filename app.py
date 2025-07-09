@@ -9,7 +9,7 @@ import boto3
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'lks')
-API_GATEWAY_URL = os.environ.get('API_GATEWAY_URL', 'your_api_gateway_url_here')
+API_GATEWAY_URL = os.environ.get('API_GATEWAY_URL', 'https://iqi3kriysk.execute-api.us-east-1.amazonaws.com/prod')
 
 # Decorator untuk route yang membutuhkan auth
 def token_required(f):
@@ -61,7 +61,7 @@ def dashboard():
         aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         aws_session_token=os.environ.get("AWS_SESSION_TOKEN")
         )
-        topic_arn = os.environ.get("SNS_TOPIC_ARN", 'arn:aws:sns:us-east-1:123456789012:my-topic')
+        topic_arn = os.environ.get("SNS_TOPIC_ARN", 'arn:aws:sns:us-east-1:903675765022:techno-sns-payakumbuh-akbar')
         
         subject = topic_arn.split(':')[-1]
         message = f"Selamat {subject}, You can access your dashboard."
@@ -76,7 +76,7 @@ def dashboard():
 
     
     conn = connect(
-        s3_staging_dir=os.environ.get("S3_STAGING_DIR", "s3://your-s3-bucket/"),
+        s3_staging_dir=os.environ.get("S3_STAGING_DIR", "s3://s3://technoinput-payakumbuh-akbar/"),
         aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
         aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         aws_session_token=os.environ.get("AWS_SESSION_TOKEN"),
@@ -98,7 +98,7 @@ def dashboard():
     for _, row in df.iterrows():
         image_key = row['image_key']
         if not grouped_data[image_key]['image_url']:
-            grouped_data[image_key]['image_url'] = f"https://s3.amazonaws.com/s3user-bucket-input-25/{image_key}"
+            grouped_data[image_key]['image_url'] = f"https://s3.amazonaws.com/s3://technoinput-payakumbuh-akbar/{image_key}"
         grouped_data[image_key]['labels'].append(row['label'])
         grouped_data[image_key]['confidences'].append(row['confidence'])
 
@@ -134,7 +134,7 @@ def validate_token_api():
                     aws_session_token=os.environ.get("AWS_SESSION_TOKEN")
                 )
 
-                topic_arn = os.environ.get("SNS_TOPIC_ARN", "arn:aws:sns:us-east-1:123456789012:YourTopicName")
+                topic_arn = os.environ.get("SNS_TOPIC_ARN", "arn:aws:sns:us-east-1:903675765022:techno-sns-payakumbuh-akbar")
                 message = "Selamat! Anda berhasil masuk ke dashboard menggunakan token yang valid."
                 
                 sns.publish(

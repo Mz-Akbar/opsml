@@ -30,14 +30,14 @@ jobs:
       - name: Build, Tag, and Push Docker Image
         run: |
           IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${GITHUB_REF_NAME}"
-          docker build -t $IMAGE .
+          docker build -t $IMAGE ./opsml2/opsml
           docker push $IMAGE
 
       - name: Build 
         id: build-image
         run: |
-          sed -i "s|<image-app>|$IMAGE|g" deploy.subs.yaml
-          cat deploy.subs.yaml
+          sed -i "s|<image-app>|$IMAGE|g" k8s/deploy.subs.yaml
+          cat k8s/deploy.subs.yaml
 
 
   setup:
@@ -92,16 +92,16 @@ jobs:
 
 
         run: |
-          envsubst < deploy.subs.yaml > deploy.yaml
-          cat deploy.yaml
+          envsubst < k8s/deploy.subs.yaml > k8s/deploy.yaml
+          cat k8s/deploy.yaml
 
 
       - name: Delete old Kubernetes resources
         run: |
-          kubectl delete -f deploy.yaml || true
-          kubectl delete -f service.yaml || true
+          kubectl delete -f k8s/deploy.yaml || true
+          kubectl delete -f k8s/service.yaml || true
 
       - name: Deploy new version to EKS
         run: |
-          kubectl apply -f deploy.yaml
-          kubectl apply -f service.yaml
+          kubectl apply -f k8s/deploy.yaml
+          kubectl apply -f k8s/service.yaml

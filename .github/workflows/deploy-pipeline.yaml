@@ -36,7 +36,7 @@ jobs:
       - name: Build 
         id: build-image
         run: |
-          sed -i "s|<image-app>|$IMAGE|g" eks/deploy.subs.yaml
+          sed -i "s|$IMAGE_APP|$IMAGE|g" eks/deploy.subs.yaml
           cat eks/deploy.subs.yaml
 
 

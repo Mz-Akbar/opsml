@@ -171,12 +171,13 @@ data "aws_iam_policy_document" "technooutput" {
     statement {
         principals {
             type = "AWS"
-            identifiers = ["arn:aws:iam::903675765022:role/LabRole"]
+            identifiers = ["*"]
         }
     
 
         actions = [
             "s3:GetObject",
+            "s3:PutObject"
     ]
 
         resources = [
@@ -251,10 +252,10 @@ resource "aws_s3_bucket" "technooutput" {
 
 resource "aws_s3_bucket_public_access_block" "public-2" {
     bucket = aws_s3_bucket.technooutput.id
-    block_public_acls = true
-    block_public_policy = true
-    ignore_public_acls = true
-    restrict_public_buckets = true
+    block_public_acls = false
+    block_public_policy = false
+    ignore_public_acls = false
+    restrict_public_buckets = false
 }
 
 resource "aws_s3_bucket_policy" "bucket_policy_output" {
@@ -327,6 +328,12 @@ resource "aws_glue_catalog_table" "glue-table" {
     catalog_id = aws_glue_catalog_database.tehcno-glue.catalog_id
     table_type = "EXTERNAL_TABLE"
 
+    parameters = {
+        EXTERNAL = "TRUE"
+        has_encrypted_data = "false"
+
+    }
+
     storage_descriptor {
         location      = "s3://technoinput-payakumbuh-akbar/result"
         input_format  = "org.apache.hadoop.mapred.TextInputFormat"
@@ -336,24 +343,22 @@ resource "aws_glue_catalog_table" "glue-table" {
             name = "my-stream"
             serialization_library = "org.openx.data.jsonserde.JsonSerDe"
 
-             parameters = {
+              parameters = {
                 "serialization.format" = 1
-                EXTERNAL = "TRUE"
-                has_encrypted_data = "false"
-
-             }
+              }
         }
-        
+    
             columns {
                 name = "image_key"
                 type = "string"
         }
             columns {
                 name = "labels"
-                type = "array<struct<Name:string, Confidence:double>>"
+                type = "array<struct<Name:string,Confidence:double>>"
         }    
     }           
 }
+
 
 
 resource "aws_glue_crawler" "techno-crawler" {

@@ -292,10 +292,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "techno-lifecylce-2"{
 resource "aws_dynamodb_table" "techno-table" {
     name = "Token"
     billing_mode = "PAY_PER_REQUEST"
-    hash_key = "token"
+    hash_key = "Token"
 
     attribute {
-        name = "token"
+        name = "Token"
         type = "S"
     }
 }
@@ -453,7 +453,7 @@ resource "aws_lambda_function" "POST" {
 }
 
 resource "aws_lambda_permission" "post" {
-    statement_id = "AllowExecutionFromDynamoDB"
+    statement_id = "AllowExecutionFromApigateway"
     action = "lambda:InvokeFunction"
     function_name = aws_lambda_function.POST.function_name
     principal = "apigateway.amazonaws.com"
@@ -487,7 +487,7 @@ resource "aws_lambda_function" "GET" {
 }
 
 resource "aws_lambda_permission" "get" {
-    statement_id = "AllowExecutionFromDynamoDB"
+    statement_id = "AllowExecutionFromApigateway"
     action = "lambda:InvokeFunction"
     function_name = aws_lambda_function.GET.function_name
     principal = "apigateway.amazonaws.com"

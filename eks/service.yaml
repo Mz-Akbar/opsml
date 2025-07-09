@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: techno-service
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-security-groups: sg-02eda454764199ba4
+    service.beta.kubernetes.io/aws-load-balancer-security-groups: sg-08aaeebe87bd4ba30
 spec:
   type: LoadBalancer
   selector:

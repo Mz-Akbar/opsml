@@ -5,7 +5,7 @@ on:
     branches:
       - dev1
     tags:
-      - 'v*'   # Trigger hanya saat push tag seperti v1.0.0, v2.1.3, dll
+      - 'v*'  
 
 # env:
 #   AWS_ACCESS_KEY_ID: {{ secrets.AWS_ACCESS_KEY_ID }}
@@ -45,7 +45,7 @@ jobs:
 
       - name: Replace Image
         run: |
-          sed -i "s"|<app-image>/$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE|g" deploy.yaml
+          sed -i "s"|<app-image>|$IMAGE|g" deploy.yaml
           cat deploy.yaml
 
   setup:

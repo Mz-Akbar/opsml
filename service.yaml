@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: techno-service]
+  annotaions:
+    service.beta.kubernetes.io/aws-load-balancer-security-group: sg-0523c8addc4f8b9fc
+spec:
+  type: LoadBalancer
+  selector:
+    app: techno-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 2000
+      env:
+

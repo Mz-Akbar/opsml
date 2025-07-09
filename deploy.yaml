@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: techno-deployment
+  labels:
+    app: techno
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: techno-app
+  template:
+    metadata:
+      labels:
+        app: techno-app
+    spec:
+      containers:
+      - name: techno
+        image: <app-image>
+        ports:
+        - containerPort: 2000
+      env:
+      - name: AWS_ACCESS_KEY_ID
+        value: "$AWS_ACCESS_KEY_ID"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "$AWS_SECRET_ACCESS_KEY"
+      - name: AWS_SESSION_TOKEN
+        value: "$AWS_SESSION_TOKEN"
+      - name: AWS_REGION
+        value: "$AWS_REGION"
+      - name: S3_STAGING_DIR
+        value: "$S3_STAGING_DIR"
+      - name: FLASK_SECRET_KEY
+        value: "$FLASK_SECRET_KEY"
+      - name: API_GATEWAY_URL
+        value: "$API_GATEWAY_URL"
+      - name: SNS_TOPIC_ARN
+        value: "$SNS_TOPIC_ARN"
+      - name: ATHENA_SCHEMA_NAME
+        value: "$ATHENA_SCHEMA_NAME"
+

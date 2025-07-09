@@ -292,10 +292,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "techno-lifecylce-2"{
 resource "aws_dynamodb_table" "techno-table" {
     name = "Token"
     billing_mode = "PAY_PER_REQUEST"
-    hash_key = "Token"
+    hash_key = "token"
 
     attribute {
-        name = "Token"
+        name = "token"
         type = "S"
     }
 }
@@ -412,7 +412,7 @@ resource "aws_lambda_function" "lambda-s3" {
 
     environment {
       variables = {
-        SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:126189343233:techno-sns-payakumbuh-akbar",
+        SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:903675765022:techno-sns-payakumbuh-akbar",
         KINESIS_STREAM_NAME = "techno-kinesis-Akbar",
         DEST_BUCKET = "technooutput-payakumbuh-akbar"
       }

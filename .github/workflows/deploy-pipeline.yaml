@@ -34,12 +34,12 @@ jobs:
           docker build -t $IMAGE .
           docker push $IMAGE
 
-      - name: Build 
-        env:
-          IMAGE: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.ref_name }}
-        run: |
-          sed -i "s|<image-app>|$IMAGE|g" eks/deploy.subs.yaml
-          cat eks/deploy.subs.yaml
+      # - name: Build 
+      #   env:
+      #     IMAGE: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.ref_name }}
+      #   run: |
+      #     sed -i "s|<image-app>|$IMAGE|g" eks/deploy.subs.yaml
+      #     cat eks/deploy.subs.yaml
 
   setup:
     name: Configure kubeconfig for EKS
@@ -90,7 +90,7 @@ jobs:
           S3_STAGING_DIR: ${{ secrets.S3_STAGING_DIR }}
           ATHENA_SCHEMA_NAME: ${{ secrets.ATHENA_SCHEMA_NAME }}
           ATHENA_DB: ${{ secrets.ATHENA_DB }}
-          IMAGE: ${{ env.IMAGE }}
+  
 
 
         run: |

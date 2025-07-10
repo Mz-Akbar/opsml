@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: techno-container
-          image: $IMAGE
+          image: 903675765022.dkr.ecr.us-east-1.amazonaws.com/techno-ecr-payakumbuh-akbar:dev1
           ports:
             - containerPort: 2000
           env:

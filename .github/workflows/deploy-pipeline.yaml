@@ -90,6 +90,7 @@ jobs:
           S3_STAGING_DIR: ${{ secrets.S3_STAGING_DIR }}
           ATHENA_SCHEMA_NAME: ${{ secrets.ATHENA_SCHEMA_NAME }}
           ATHENA_DB: ${{ secrets.ATHENA_DB }}
+          IMAGE: ${{ env.IMAGE }}
 
 
         run: |

@@ -62,7 +62,6 @@ def dashboard():
         aws_session_token=os.environ.get("AWS_SESSION_TOKEN")
         )
         topic_arn = os.environ.get("SNS_TOPIC_ARN", 'arn:aws:sns:us-east-1:903675765022:techno-sns-payakumbuh-akbar')
-        
         subject = topic_arn.split(':')[-1]
         message = f"Selamat {subject}, You can access your dashboard."
 
@@ -76,7 +75,7 @@ def dashboard():
 
     
     conn = connect(
-        s3_staging_dir=os.environ.get("S3_STAGING_DIR", "s3://s3://technoinput-payakumbuh-akbar/"),
+        s3_staging_dir=os.environ.get("S3_STAGING_DIR", "s3://technooutput-payakumbuh-akbar"),
         aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
         aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         aws_session_token=os.environ.get("AWS_SESSION_TOKEN"),

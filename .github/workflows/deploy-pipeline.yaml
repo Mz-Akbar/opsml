@@ -30,16 +30,17 @@ jobs:
       - name: Build, Tag, and Push Docker Image
         run: |
           IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${GITHUB_REF_NAME}"
+          sed -i "s|<image-app>|$IMAGE|g" eks/deploy.subs.yaml
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
           docker build -t $IMAGE .
           docker push $IMAGE
 
-      - name: Build 
-        env:
-          IMAGE: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.ref_name }}
-        run: |
-          sed -i "s|<image-app>|$IMAGE|g" eks/deploy.subs.yaml
-          cat eks/deploy.subs.yaml
+      # - name: Build 
+      #   env:
+      #     IMAGE: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.ref_name }}
+      #   run: |
+      #     sed -i "s|<image-app>|$IMAGE|g" eks/deploy.subs.yaml
+      #     cat eks/deploy.subs.yaml
 
   setup:
     name: Configure kubeconfig for EKS

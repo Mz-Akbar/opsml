@@ -3,22 +3,22 @@ kind: Deployment
 metadata:
   name: techno-deployment
   labels:
-    app: techno
+    app: techno-app
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
-      app: techno
+      app: techno-app
   template:
     metadata:
       labels:
-        app: techno
+        app: techno-app
     spec:
       containers:
       - name: techno
-        image: <image-app>
+        image: 919703962183.dkr.ecr.us-east-1.amazonaws.com/techno-ecr-payakumbuh-akbar:dev2
         ports:
-        - containerPort: 80
+        - containerPort: 2000
 
         env:
         - name: AWS_ACCESS_KEY_ID

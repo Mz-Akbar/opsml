@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: techno
-        image: 919703962183.dkr.ecr.us-east-1.amazonaws.com/techno-ecr-payakumbuh-akbar:dev2
+        image: 919703962183.dkr.ecr.us-east-1.amazonaws.com/techno-ecr-payakumbuh-akbar:v.4.1.4
         ports:
         - containerPort: 2000
 

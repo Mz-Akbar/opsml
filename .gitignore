@@ -18,3 +18,7 @@ venv/
 terraform.tfstate
 terraform.tfstate.backup
 provider.tf
+
+.terraform/
+terraform.tfvars
+terraform.lock.hcl

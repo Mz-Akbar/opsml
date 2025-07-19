@@ -238,7 +238,7 @@ resource "aws_s3_bucket_notification" "trigger" {
         events = ["s3:ObjectCreated:*"]
         filter_suffix = ""
     }
-    depends_on = [aws_lambda_permission.lambda-s3]
+    depends_on = [aws_lambda_permission.lambda-permission]
 }
 
 resource "aws_s3_bucket" "bucket-output" {
@@ -296,7 +296,7 @@ resource "aws_dynamodb_table" "techno-db" {
     }
 }
 
-resource "aws_dynamodb_kinesis_streaming_destination" "example" {
+resource "aws_dynamodb_kinesis_streaming_destination" "techno-kinesis" {
   stream_arn = aws_kinesis_stream.techno.arn
   table_name = aws_dynamodb_table.techno-db.name
   approximate_creation_date_time_precision = "MICROSECOND"
@@ -397,7 +397,7 @@ resource "aws_lambda_function" "lambda-s3" {
   }
 }
 
-resource "aws_lambda_permission" "lambda-s3" {
+resource "aws_lambda_permission" "lambda-permission" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda-s3.function_name

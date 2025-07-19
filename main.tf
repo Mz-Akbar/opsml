@@ -231,7 +231,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "input" {
 }
 
 resource "aws_s3_bucket_notification" "trigger" {
-    bucket = aws_s3_bucket.technoinput.id
+    bucket = aws_s3_bucket.bucket-input.id
 
     lambda_function {
         lambda_function_arn = aws_lambda_function.lambda-s3.arn
@@ -325,7 +325,7 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_table" {
     }
 
     storage_descriptor {
-        location      = "s3://technooutput-payakumbuh-akbar/result"
+        location      = "s3://technoinput-payakumbuh-akbar/result"
         input_format  = "org.apache.hadoop.mapred.TextInputFormat"
         output_format = "org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat"
 
@@ -360,6 +360,17 @@ resource "aws_glue_crawler" "techno-crawler" {
     }
 }
 
+# Athena 
+resource "aws_athena_workgroup" "main" {
+  name = "techno_workgroup"
+
+  configuration {
+    result_configuration {
+      output_location = "s3://${aws_s3_bucket.bucket-output.bucket}"
+    }
+  }
+}
+
 # SNS
 resource "aws_sns_topic" "techno-sns" {
     name = "tehno-sms-payakumbuh-akbar"
@@ -376,7 +387,7 @@ resource "aws_sns_topic_subscription" "techno-sns-susbcription" {
 data "archive_file" "s3" {
   type = "zip"
   source_file = "${path.module}/lambda/lambda_s3.py"
-  output_path = "${path.module}/lambda/lambda_s3.zip"
+  output_path = "${path.module}/lambda_s3.zip"
 }
 
 resource "aws_lambda_function" "lambda-s3" {
@@ -409,7 +420,7 @@ resource "aws_lambda_permission" "lambda-permission" {
 data "archive_file" "post" {
     type = "zip"
     source_file = "${path.module}/lambda/lambda_post.py"
-    output_path = "${path.module}/lambda/lambda_post.zip"
+    output_path = "${path.module}/lambda_post.zip"
 }
 
 resource "aws_lambda_function" "lambda-post" {
@@ -440,7 +451,7 @@ resource "aws_lambda_permission" "post" {
 data "archive_file" "get" {
     type = "zip"
     source_file = "${path.module}/lambda/lambda_get.py"
-    output_path = "${path.module}/lambda/lambda_get.zip"
+    output_path = "${path.module}/lambda_get.zip"
 }
 
 resource "aws_lambda_function" "lambda-get" {

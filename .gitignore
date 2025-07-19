@@ -22,3 +22,5 @@ provider.tf
 .terraform/
 terraform.tfvars
 terraform.lock.hcl
+terraform.tfstate.1752920178.backup
+terraform.tfstate.1752920184.backup

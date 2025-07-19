@@ -99,7 +99,7 @@ jobs:
 
       - name: Delete old Kubernetes resources
         run: |
-          envsubst < eks/deploy.subs.yaml > eks/deploy.yaml
+          envsubst < eks/deployment.yaml > eks/deploy.yaml
           cat eks/deploy.yaml
           kubectl delete -f eks/deploy.yaml || true
           kubectl delete -f eks/service.yaml || true

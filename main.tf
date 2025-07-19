@@ -230,6 +230,17 @@ resource "aws_s3_bucket_lifecycle_configuration" "input" {
     }
 }
 
+resource "aws_s3_bucket_notification" "trigger" {
+    bucket = aws_s3_bucket.technoinput.id
+
+    lambda_function {
+        lambda_function_arn = aws_lambda_function.lambda-s3.arn
+        events = ["s3:ObjectCreated:*"]
+        filter_suffix = ""
+    }
+    depends_on = [aws_lambda_permission.lambda-s3]
+}
+
 resource "aws_s3_bucket" "bucket-output" {
     bucket = "technooutput-payakumbuh-akbar"
 }
@@ -252,10 +263,10 @@ resource "aws_s3_bucket_policy" "bucket-output-policies" {
 
 
 resource "aws_s3_bucket_lifecycle_configuration" "output" {
-  bucket = aws_s3_bucket.bucket-input.id
+  bucket = aws_s3_bucket.bucket-output.id
     
     rule {
-        id = "rule-technoinput"
+        id = "rule-technooutput"
         status = "Enabled"
 
         filter {
@@ -339,9 +350,9 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_table" {
     }
 }
 
-resource "aws_glue_crawler" "example" {
+resource "aws_glue_crawler" "techno-crawler" {
     database_name = aws_glue_catalog_database.tehcno-glue.name
-    name = "example"
+    name = "techno-crawler-akbar"
     role   = "arn:aws:iam::919703962183:role/LabRole"
 
     s3_target {
@@ -381,7 +392,7 @@ resource "aws_lambda_function" "lambda-s3" {
     variables = {
         SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:919703962183:tehno-sms-payakumbuh-akbar"
         KINESIS_STREAM_NAME = "techno-kinesis-akbar"
-        DEST_BUCKET = "technoinput-payakumbuh-akbar"
+        DEST_BUCKET = "technooutput-payakumbuh-akbar"
     }
   }
 }
